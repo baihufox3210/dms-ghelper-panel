@@ -1,0 +1,14 @@
+{
+  "id": "rogControl",
+  "name": "G-Helper",
+  "description": "G-Helper laptop control panel",
+  "version": "0.3.0",
+  "author": "Local",
+  "icon": "laptop",
+  "type": "widget",
+  "capabilities": [
+    "dankbar-widget"
+  ],
+  "component": "./RogControlWidget.qml",
+  "requires_dms": ">=1.5.0"
+}
