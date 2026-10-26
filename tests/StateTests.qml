@@ -256,6 +256,30 @@ ShellRoot {
             "methods": ["display.set"]
         });
         check(!ipc.autoReady && ipc.refreshSelection === 240, "legacy backend keeps manual selection and disables Auto");
+        response("monitoring.get", {
+            "cpuTemperatureC": 50,
+            "display": {
+                "currentHz": 240,
+                "availableHz": [240, 60]
+            }
+        });
+        var originalOptions = ipc.refreshOptions;
+        response("monitoring.get", {
+            "cpuTemperatureC": 51,
+            "display": {
+                "currentHz": 60,
+                "availableHz": [60, 240]
+            }
+        });
+        check(ipc.refreshOptions === originalOptions, "sensor and current-Hz updates preserve segment delegates");
+        check(ipc.refreshSelection === 60, "stable segment model still tracks current selection");
+        response("monitoring.get", {
+            "display": {
+                "currentHz": 60,
+                "availableHz": [60, 120]
+            }
+        });
+        check(ipc.refreshOptions !== originalOptions && ipc.refreshRates[1] === 120, "advertised mode changes rebuild segment options");
         console.log("ROG_STATE_TESTS_PASS", checks);
     }
 

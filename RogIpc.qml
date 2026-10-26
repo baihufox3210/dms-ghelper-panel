@@ -26,6 +26,18 @@ Item {
     readonly property bool autoSupported: caps.displayAuto === true && supports("display.auto.get") && supports("display.auto.set") && !autoUnavailable
     readonly property bool autoReady: ready && autoSupported && autoKnown
     readonly property var refreshSelection: autoSupported ? (autoKnown ? (autoStatus.enabled ? "auto" : display.currentHz) : null) : display.currentHz
+    // Keep the segment model stable across sensor polls and current-Hz changes.
+    property var refreshRates: []
+    readonly property var refreshOptions: [{
+        "label": "Auto",
+        "value": "auto",
+        "enabled": autoReady
+    }].concat(refreshRates.map((hz) => {
+        return ({
+            "label": hz + " Hz",
+            "value": hz
+        });
+    }))
     property bool refreshPending: false
     property var queue: []
     property string method: ""
@@ -114,6 +126,15 @@ Item {
             autoKnown = false;
 
         drain();
+    }
+
+    function updateRefreshRates(rates) {
+        var next = (rates || []).slice().sort((a, b) => {
+            return a - b;
+        });
+        if (JSON.stringify(next) !== JSON.stringify(refreshRates))
+            refreshRates = next;
+
     }
 
     function chooseRefresh(value) {
@@ -208,6 +229,7 @@ Item {
             } else if (method === "display.auto.get") {
                 applyAutoStatus(r);
             } else if (method === "monitoring.get") {
+                updateRefreshRates(r.display && r.display.availableHz);
                 status = r;
                 connected = true;
                 if (errorMethod.indexOf(".set") < 0) {

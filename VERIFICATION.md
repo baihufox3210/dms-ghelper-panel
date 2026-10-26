@@ -6,7 +6,7 @@
 - `cargo fmt --check` and Clippy with warnings denied passed.
 - QML parsing with `qmllint` passed. The running DMS also loaded the plugin successfully after `dms restart`.
 - Seven mock-socket test methods passed, including six mutation outcomes in subtests: fragmented responses, request shape, outcome preservation, protocol errors, mismatched IDs, incomplete frames, invalid parameters and unsafe runtime permissions. Mock tests never touch hardware.
-- Forty-one QML state assertions passed: connection, unsupported methods, disabled/loading controls, duplicate requests, reboot, pending, blocked, poll/error persistence, battery observed values, failed outcomes, busy backoff, disconnect and malformed JSON.
+- Forty-four QML state assertions passed: connection, unsupported methods, disabled/loading controls, duplicate requests, reboot, pending, blocked, poll/error persistence, battery observed values, failed outcomes, busy backoff, disconnect and malformed JSON.
 - Actual DMS panel opened through native widget IPC. Dark and light theme screenshots inspected: square logo areas, monochrome logo variants, title hierarchy, symmetric margins, equal-width cards/buttons, no observed clipping. Original dark theme restored.
 - A full DMS restart was necessary: plugin hot reload retained cached dependent QML types. Restarted and verified the new `ROG` / `Control center` header, rather than relying on the reload success message.
 - DMS logs contained no ROG QML errors. Existing UPower PowerProfiles and portal registration warnings were present and are outside this plugin.
@@ -50,3 +50,5 @@ Latest source and running `capabilities.get` now expose `displayAuto:true` and b
 Removed the brightness label, value, slider and its QML IPC handler at the user's request. The historical brightness IPC test above remains a record of the bridge verification; the current panel no longer sends brightness changes. QML parsing passed after removal.
 
 Moved observed current Hz to the far right of the Display heading. Shared `RogSection.valueText` keeps the heading and value vertically aligned, while sections without a value retain their existing appearance. Auto policy and status text remain beneath the segments. QML parsing passed.
+
+Optimized Display model updates: monitoring retains the existing options array when advertised rates are unchanged (including differently ordered replies), preserving segment delegates and hover/focus state during sensor/current-Hz updates. Added assertions for model identity, selection updates and actual mode-list changes.

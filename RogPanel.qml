@@ -17,18 +17,6 @@ Item {
             "value": m
         });
     })
-    readonly property var hzOptions: [{
-        "label": "Auto",
-        "value": "auto",
-        "enabled": backend.autoReady
-    }].concat((backend.display.availableHz || []).slice().sort((a, b) => {
-        return a - b;
-    }).map((h) => {
-        return ({
-            "label": h + " Hz",
-            "value": h
-        });
-    }))
     readonly property var charge: backend.battery.chargeLimit
 
     function value(v, suffix) {
@@ -182,7 +170,7 @@ Item {
 
             RogSegments {
                 Layout.fillWidth: true
-                options: panel.hzOptions
+                options: backend.refreshOptions
                 emptyText: "Refresh rate unavailable"
                 selected: backend.refreshSelection
                 enabled: backend.ready && backend.caps.displayRefresh === true
