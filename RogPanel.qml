@@ -211,56 +211,6 @@ Item {
 
             }
 
-            RowLayout {
-                Layout.fillWidth: true
-
-                StyledText {
-                    text: "Brightness"
-                    font.pixelSize: 12
-                    color: Theme.surfaceVariantText
-                }
-
-                Item {
-                    Layout.fillWidth: true
-                }
-
-                StyledText {
-                    text: backend.caps.brightness === true ? panel.value(brightness.isDragging ? brightness.value : backend.display.brightnessPercent, "%") : "Unsupported"
-                    font.pixelSize: 12
-                    color: Theme.surfaceText
-                }
-
-            }
-
-            DankSlider {
-                id: brightness
-
-                Layout.fillWidth: true
-                Layout.preferredHeight: 32
-                minimum: 4
-                maximum: 100
-                wheelEnabled: false
-                showValue: false
-                enabled: backend.ready && backend.caps.brightness === true && backend.display.brightnessPercent != null
-                value: backend.display.brightnessPercent || 4
-                onSliderDragFinished: (v) => {
-                    return backend.change("display.brightness.set", {
-                        "percent": v
-                    });
-                }
-
-                Connections {
-                    function onStatusChanged() {
-                        if (!brightness.isDragging && !backend.applying)
-                            brightness.value = backend.display.brightnessPercent || 4;
-
-                    }
-
-                    target: backend
-                }
-
-            }
-
         }
 
         RogSection {

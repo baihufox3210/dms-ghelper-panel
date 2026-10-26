@@ -44,3 +44,7 @@ Latest source and running `capabilities.get` now expose `displayAuto:true` and b
 - Failed Auto apply: retain the server's saved `enabled` preference and show an error rather than success. Missing/malformed outcomes, unknown methods and unsupported capabilities never produce an enabled control.
 - Actual hardware: initial Auto=true, AC=true, 240 Hz. Auto Off returned applied and preserved 240 Hz; manual 60 Hz applied with Auto=false; Auto On applied and returned 240 Hz; manually selecting the already-current 240 Hz disabled Auto. Restored original Auto=true / AC / 240 Hz.
 - No direct compositor display commands, G-Helper config access, core changes or backup files were used.
+
+## Panel simplification
+
+Removed the brightness label, value, slider and its QML IPC handler at the user's request. The historical brightness IPC test above remains a record of the bridge verification; the current panel no longer sends brightness changes. QML parsing passed after removal.

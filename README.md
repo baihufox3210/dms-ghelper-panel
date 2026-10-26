@@ -26,9 +26,9 @@ Deployment copies only this plugin's QML, SVG, manifest and compiled binary, the
 
 Monitoring runs every 3 seconds while the panel is open and every 30 seconds when closed. Battery reads are less frequent; capabilities refresh periodically and when opening the panel. Busy responses back off. Mutations take priority over queued reads, disable controls until completion and never retry automatically. A timeout does not undo a hardware operation; inspect readback before retrying.
 
-GPU choices come from capabilities. Selection reflects configured GPU mode, while the current physical mode and reboot requirement remain visible. Battery observed and saved limits are separate; firmware normalization and full-charge override are displayed. Brightness submits once on release, without sending intermediate drag values.
+GPU choices come from capabilities. Selection reflects configured GPU mode, while the current physical mode and reboot requirement remain visible. Battery observed and saved limits are separate; firmware normalization and full-charge override are displayed.
 
-Display uses equal-width Auto / advertised Hz segments. `display.auto.get` reads the native preference and `display.auto.set` sends a boolean `enabled`. G-Helper owns the AC/Battery policy and Overdrive; the plugin never implements a competing switching algorithm. Manual Hz changes re-read Auto even on failure, because the server may have disabled the preference before a failed modeset. Brightness does not disable Auto.
+Display uses equal-width Auto / advertised Hz segments. `display.auto.get` reads the native preference and `display.auto.set` sends a boolean `enabled`. G-Helper owns the AC/Battery policy and Overdrive; the plugin never implements a competing switching algorithm. Manual Hz changes re-read Auto even on failure, because the server may have disabled the preference before a failed modeset.
 
 ## Verification
 
