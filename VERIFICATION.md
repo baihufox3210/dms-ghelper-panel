@@ -48,3 +48,5 @@ Latest source and running `capabilities.get` now expose `displayAuto:true` and b
 ## Panel simplification
 
 Removed the brightness label, value, slider and its QML IPC handler at the user's request. The historical brightness IPC test above remains a record of the bridge verification; the current panel no longer sends brightness changes. QML parsing passed after removal.
+
+Moved observed current Hz to the far right of the Display heading. Shared `RogSection.valueText` keeps the heading and value vertically aligned, while sections without a value retain their existing appearance. Auto policy and status text remain beneath the segments. QML parsing passed.

@@ -178,6 +178,7 @@ Item {
             Layout.fillWidth: true
             title: "Display"
             icon: "desktop_windows"
+            valueText: panel.value(backend.display.currentHz, " Hz")
 
             RogSegments {
                 Layout.fillWidth: true
@@ -190,25 +191,13 @@ Item {
                 }
             }
 
-            RowLayout {
+            StyledText {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 16
-                spacing: 8
-
-                StyledText {
-                    Layout.fillWidth: true
-                    text: !backend.autoSupported ? "Auto unsupported" : !backend.autoKnown ? (backend.applying ? "Applying changes…" : "Reading Auto state…") : "AC: highest · Battery: prefer 60 Hz"
-                    elide: Text.ElideRight
-                    font.pixelSize: 11
-                    color: Theme.surfaceVariantText
-                }
-
-                StyledText {
-                    text: panel.value(backend.display.currentHz, " Hz")
-                    font.pixelSize: 11
-                    color: Theme.surfaceText
-                }
-
+                text: !backend.autoSupported ? "Auto unsupported" : !backend.autoKnown ? (backend.applying ? "Applying changes…" : "Reading Auto state…") : "AC: highest · Battery: prefer 60 Hz"
+                elide: Text.ElideRight
+                font.pixelSize: 11
+                color: Theme.surfaceVariantText
             }
 
         }
